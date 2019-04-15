@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<title>Live University</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+		<link href="style.css" rel="stylesheet"/>
+		<link href="style_obj1.css" rel="stylesheet"/>
+		<link href="style_obj2.css" rel="stylesheet"/>
+		<link href="style_obj3.css" rel="stylesheet"/>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>		
+	</head>
+
+	<body>
+		
+		<div class="all">
+		  <div class="obj1">
+		  	<div class="option">
+		  		<p>Option <span class="js-chosen-option"></span></p>
+		  	</div>
+		  	<div class="input-wrapper">
+		  		<label for="ammount">Quantity</label>
+		  		<input type="number" min="0" max="3" name="ammount" class="js-ammount"/>
+		  	</div>
+		  </div>
+		  <div class="obj2">
+		  	<select class="js-option">
+		  		<option value="null">Choose an option</option>
+		  		<option value="A">Option A</option>
+		  		<option value="B">Option B</option>
+		  	</select>
+		  </div>
+		  <div class="obj3">
+		  	<ul class="js-object-list"></ul>
+		  	<div class="pagination-controls">
+		  		<span class="js-previous-page"> < </span>
+		  		<span class="js-next-page"> > </span>
+		  	</div>
+		  </div>
+		</div>
+	</body>
+
+
+	<script>
+	var app = {
+	itens: [],
+	ammount: 0,
+	currentPage: 0,
+	maxPage: 0,
+	_initItems: function(){
+		for(var i=0;i<11;i++){
+			this.itens.push({ name: "Item A"+(i+1), option: "A" });
+		}
+		for(var i=0;i<21;i++){
+			this.itens.push({ name: "Item B"+(i+1), option: "B" });
+		}
+	},
+	init: function(){
+		this._initItems();
+
+		$('.js-previous-page').on('click', { app: this }, function(event){
+			var app = event.data.app;
+			app._previous_page();
+			app.render();
+		});
+
+		$('.js-next-page').on('click', { app: this }, function(event){
+			var app = event.data.app;
+			app._next_page();
+			app.render();
+		});
+
+		$('.js-ammount').on('input change', { app: this }, function(event){
+			var app = event.data.app;
+			if($(this).val() == 0 || $(this).val() == undefined || $(this).val() == null){
+				$(this).addClass('error');
+				app.ammount = 0
+			}
+			else {
+				$(this).removeClass('error');
+				app.ammount = Math.min(parseInt($(this).val()), 3)
+			}
+
+			app._go_to_first_page();
+			app.render();
+		});
+
+		$('.js-option').on('change', { app: this }, function(event){
+			var app = event.data.app;
+			app.chosenOption = $(this).val();
+			// js-ammount should handle the logic
+			$('.js-ammount').trigger('change');
+		});
+
+		this.render();
+	},
+	render: function(){
+		var filteredItems = this._filterOption(this.chosenOption);
+		var perPage = this.ammount;
+		
+		this.maxPage = Math.ceil(filteredItems.length / perPage) - 1;
+
+		var listContent = "";
+		var firstPosition = this.currentPage*perPage;
+		var lastPosition = Math.min(firstPosition + perPage, filteredItems.length);
+
+		for(var i=firstPosition;i<lastPosition;i++){
+			listContent += "<li>"+filteredItems[i].name+"</li>";
+		}
+
+		$('.js-object-list').html(listContent);
+
+		if(listContent == "") $('.pagination-controls').addClass('hidden');
+		else $('.pagination-controls').removeClass('hidden');
+	},
+	_filterOption: function(chosenOption){
+		return this.itens.filter(function(currentItem){
+			return currentItem.option == chosenOption
+		});
+	},
+	_go_to_first_page: function(){
+		this.currentPage = 0;
+	},
+	_next_page: function(){
+		this.currentPage = Math.min(this.currentPage + 1, this.maxPage);
+	},
+	_previous_page: function(){
+		this.currentPage = Math.max(this.currentPage - 1, 0);
+	},
+}
+
+app.init();
+	</script>
+</html>

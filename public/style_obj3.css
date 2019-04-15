@@ -1,0 +1,27 @@
+.obj3 {
+	padding: 10px;	
+}
+
+.obj3 ul li {
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #dcdcdc;
+	margin: 20px 0;
+}
+
+.obj3 .pagination-controls {
+	display: flex;
+	justify-content: center;
+	font-size: 2rem;
+}
+
+.obj3 .pagination-controls span {
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.obj3 .pagination-controls span:hover {
+	color: orange;
+}

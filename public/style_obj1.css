@@ -1,0 +1,36 @@
+.obj1 {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.obj1 .option, .obj1 .input-wrapper {
+	height: 70px;
+	margin: 20 0px;
+	background-color: #797979;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.obj1 .input-wrapper {
+	flex-wrap: wrap;
+	padding: 5px;
+}
+
+.obj1 .input-wrapper label, .obj1 .input-wrapper input {
+	width: 100%;
+}
+
+.obj1 .input-wrapper label {
+	text-align: center;
+}
+
+.obj1 .input-wrapper input {
+	outline: none;
+}
+
+.obj1 .input-wrapper input.error {
+	outline: 1px solid red;
+}

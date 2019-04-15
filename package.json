@@ -1,0 +1,19 @@
+{
+	"name": "projeto - Live University",
+	"version": "1.0.0",
+	"description": "Go Brunch",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"projeto",
+		"live university"
+	],
+	"author": "Renato Guilherme",
+	"license": "MIT",
+	"dependencies": {
+		"ejs": "^2.6.1",
+		"express": "^4.16.4"
+	}
+}
